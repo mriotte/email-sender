@@ -24,8 +24,8 @@
 <button onclick="goBack()">Go Back</button>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        fetch('/testing/backend/get_statuses.php')
-            .then(response => {
+        fetch('../../backend/get_statuses.php')
+                .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

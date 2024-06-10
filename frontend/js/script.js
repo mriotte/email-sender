@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const formData = new FormData(this);
 
-        fetch('/testing/backend/upload.php', {
+        fetch('../../backend/upload.php', {
             method: 'POST',
             body: formData
         })
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
      * @param {FormData} formData The form data to be sent.
      */
     function sendEmails(formData) {
-        fetch('/testing/backend/send_emails.php', {
+        fetch('../../backend/send_emails.php', {
             method: 'POST',
             body: formData
         })
