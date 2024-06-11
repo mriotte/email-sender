@@ -51,6 +51,7 @@ function sendEmails(PDO $pdo, int $limit, int $interval): array
     $response = [];
 
     $pendingCount = Email::countPendingEmails($pdo);
+    $totalCount = Email::getTotalEmailsCount($pdo);
 
     if ($pendingCount == 0) {
         $response['message'] = 'No pending emails to process';
@@ -66,6 +67,8 @@ function sendEmails(PDO $pdo, int $limit, int $interval): array
 
     $response['message'] = 'Sending Emails';
     $response['emails'] = [];
+    $response['totalEmails'] = $totalCount;
+    $response['sentEmails'] = $totalCount - $pendingCount + $limit;
 
     $mail = configureMailer();
 
@@ -77,6 +80,7 @@ function sendEmails(PDO $pdo, int $limit, int $interval): array
     $response['interval'] = $interval;
     return $response;
 }
+
 
 /**
  * Sends an email using PHPMailer and updates its status in the database.

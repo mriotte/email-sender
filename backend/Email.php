@@ -65,6 +65,23 @@ class Email
     }
 
     /**
+     * Retrieves the total number of emails in the database.
+     *
+     * @param PDO $pdo A PDO instance representing a connection to the database.
+     * @return int The total number of emails.
+     */
+    public static function getTotalEmailsCount(PDO $pdo): int
+    {
+        try {
+            $stmt = $pdo->query('SELECT COUNT(*) FROM emails');
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log('Failed to get total emails count: ' . $e->getMessage());
+            return 0;
+        }
+    }
+
+    /**
      * Counts the number of pending emails in the database.
      *
      * @param PDO $pdo A PDO instance representing a connection to the database.

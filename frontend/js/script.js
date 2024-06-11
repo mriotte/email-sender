@@ -6,19 +6,39 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
 
         const formData = new FormData(this);
+        const xhr = new XMLHttpRequest();
 
-        fetch('../../backend/upload.php', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                displayMessage(data.message || data.error || 'Unknown error occurred');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                displayMessage('An error occurred while uploading the file.');
-            });
+        xhr.open('POST', 'backend/upload.php', true);
+
+        // Display progress
+        xhr.upload.addEventListener('progress', function (e) {
+            if (e.lengthComputable) {
+                const percentComplete = (e.loaded / e.total) * 100;
+                const progressBar = document.getElementById('progressBar');
+                const progressStatus = document.getElementById('progressStatus');
+                progressBar.style.display = 'block';
+                progressBar.value = percentComplete;
+                progressStatus.textContent = `Uploading: ${Math.round(percentComplete)}%`;
+            }
+        });
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                displayMessage(response.message || response.error || 'Unknown error occurred');
+            } else {
+                displayMessage('Upload failed');
+            }
+            // Hide progress indicator after upload
+            document.getElementById('progressBar').style.display = 'none';
+            document.getElementById('progressStatus').textContent = '';
+        };
+
+        xhr.onerror = function () {
+            displayMessage('Upload failed');
+        };
+
+        xhr.send(formData);
     });
 
     // Handle send emails form submission
@@ -34,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
      * @param {FormData} formData The form data to be sent.
      */
     function sendEmails(formData) {
-        fetch('../../backend/send_emails.php', {
+        fetch('backend/send_emails.php', {
             method: 'POST',
             body: formData
         })
@@ -55,10 +75,20 @@ document.addEventListener('DOMContentLoaded', function () {
      */
     function handleSendEmailsResponse(data) {
         const messageDiv = document.getElementById('message');
+        const emailProgressBar = document.getElementById('emailProgressBar');
+        const emailProgressStatus = document.getElementById('emailProgressStatus');
+
         if (data.message) {
             displayMessage(data.message);
         }
         if (data.emails && data.emails.length > 0) {
+            const totalEmails = data.totalEmails;
+            const sentEmails = data.sentEmails;
+
+            emailProgressBar.style.display = 'block';
+            emailProgressBar.value = (sentEmails / totalEmails) * 100;
+            emailProgressStatus.textContent = `Emails sent: ${sentEmails} of ${totalEmails}`;
+
             const emailList = document.createElement('ul');
             data.emails.forEach(function (email) {
                 const listItem = document.createElement('li');

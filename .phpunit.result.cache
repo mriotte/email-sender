@@ -1,1 +1,1 @@
-{"version":1,"defects":[],"times":{"ParseCSVFileTest::testParseValidCSVFile":0.012,"ParseCSVFileTest::testParseInvalidCSVFile":0.004,"ParseCSVFileTest::testParseEmptyCSVFile":0.003,"SendEmailTest::testSendEmailSuccess":0.004,"SendEmailTest::testSendEmailFailure":0.001}}
+{"version":1,"defects":[],"times":{"ParseCSVFileTest::testParseValidCSVFile":0.018,"ParseCSVFileTest::testParseInvalidCSVFile":0.004,"ParseCSVFileTest::testParseEmptyCSVFile":0.004,"SendEmailTest::testSendEmailSuccess":0.007,"SendEmailTest::testSendEmailFailure":0.002}}

@@ -15,8 +15,9 @@
             <input type="file" name="file" id="file" accept=".csv">
             <button type="submit">Upload</button>
         </form>
+        <progress id="progressBar" value="0" max="100" style="width: 100%; display: none;"></progress>
+        <div id="progressStatus"></div>
     </div>
-
     <div class="block">
         <h2>Send Emails</h2>
         <form id="sendEmailsForm" class="form">
@@ -27,14 +28,12 @@
             <button type="submit" id="sendButton">Send Emails</button>
             <button type="button" id="stopButton">Stop Sending</button>
         </form>
-
+        <progress id="emailProgressBar" value="0" max="100" style="width: 100%; display: none;"></progress>
+        <div id="emailProgressStatus"></div>
         <a href="frontend/templates/status.html">View Emails Status</a>
     </div>
-
     <div id="message"></div>
 </div>
-
 <script src="frontend/js/script.js"></script>
-
 </body>
 </html>

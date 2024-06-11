@@ -14,7 +14,8 @@
         <th>Name</th>
         <th>Content</th>
         <th>Status</th>
-        <th>Sent Date</th>
+        <th>Sent At</th>
+        <th>Updated At</th>
         <th>Error</th>
     </tr>
     </thead>
@@ -42,6 +43,7 @@
                         <td>${email.content}</td>
                         <td>${email.status}</td>
                         <td>${email.sent_at}</td>
+                        <td>${email.updated_at}</td>
                         <td class="${email.status === 'failed' ? 'error' : ''}">${email.last_error || ''}</td>
                     `;
                     tbody.appendChild(row);
