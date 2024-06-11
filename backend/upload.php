@@ -47,10 +47,19 @@ function parseCSVFile(string $file_path): array
     $rows = [];
     while (($row = fgetcsv($file)) !== false) {
         if (count($row) >= 3) {
+            $email = trim($row[0]);
+            $name = trim($row[1]);
+            $content = trim($row[2]);
+
+            // Validate email address
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                continue; // Skip invalid email addresses
+            }
+
             $rows[] = [
-                'email' => $row[0],
-                'name' => $row[1],
-                'content' => $row[2],
+                'email' => $email,
+                'name' => $name,
+                'content' => $content,
             ];
         }
     }
